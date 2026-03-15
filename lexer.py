@@ -1,4 +1,5 @@
 import ply.lex as lex
+import re
 import sys
 
 # Analizador léxico para un subconjunto de Pascal
@@ -71,163 +72,163 @@ t_RBR       = r'\]'
 # Palabras reservadas
 
 def t_PROCEDURE(t):
-    r'[pP][rR][oO][cC][eE][dD][uU][rR][eE]\b'
+    r'procedure\b'
     return t
 
 def t_FUNCTION(t):
-    r'[fF][uU][nN][cC][tT][iI][oO][nN]\b'
+    r'function\b'
     return t
 
 def t_BOOLEAN(t):
-    r'[bB][oO][oO][lL][eE][aA][nN]\b'
+    r'boolean\b'
     return t
 
 def t_INTEGER(t):
-    r'[iI][nN][tT][eE][gG][eE][rR]\b'
+    r'integer\b'
     return t
 
 def t_PROGRAM(t):
-    r'[pP][rR][oO][gG][rR][aA][mM]\b'
+    r'program\b'
     return t
 
 def t_DOWNTO(t):
-    r'[dD][oO][wW][nN][tT][oO]\b'
+    r'downto\b'
     return t
 
 def t_PACKED(t):
-    r'[pP][aA][cC][kK][eE][dD]\b'
+    r'packed\b'
     return t
 
 def t_RECORD(t):
-    r'[rR][eE][cC][oO][rR][dD]\b'
+    r'record\b'
     return t
 
 def t_REPEAT(t):
-    r'[rR][eE][pP][eE][aA][tT]\b'
+    r'repeat\b'
     return t
 
 def t_STRING(t):
-    r'[sS][tT][rR][iI][nN][gG]\b'
+    r'string\b'
     return t
 
 def t_ARRAY(t):
-    r'[aA][rR][rR][aA][yY]\b'
+    r'array\b'
     return t
 
 def t_BEGIN(t):
-    r'[bB][eE][gG][iI][nN]\b'
+    r'begin\b'
     return t
 
 def t_CONST(t):
-    r'[cC][oO][nN][sS][tT]\b'
+    r'const\b'
     return t
 
 def t_LABEL(t):
-    r'[lL][aA][bB][eE][lL]\b'
+    r'label\b'
     return t
 
 def t_UNTIL(t):
-    r'[uU][nN][tT][iI][lL]\b'
+    r'until\b'
     return t
 
 def t_WHILE(t):
-    r'[wW][hH][iI][lL][eE]\b'
+    r'while\b'
     return t
 
 def t_CASE(t):
-    r'[cC][aA][sS][eE]\b'
+    r'case\b'
     return t
 
 def t_CHAR(t):
-    r'[cC][hH][aA][rR]\b'
+    r'char\b'
     return t
 
 def t_ELSE(t):
-    r'[eE][lL][sS][eE]\b'
+    r'else\b'
     return t
 
 def t_FILE(t):
-    r'[fF][iI][lL][eE]\b'
+    r'file\b'
     return t
 
 def t_GOTO(t):
-    r'[gG][oO][tT][oO]\b'
+    r'goto\b'
     return t
 
 def t_REAL(t):
-    r'[rR][eE][aA][lL]\b'
+    r'real\b'
     return t
 
 def t_THEN(t):
-    r'[tT][hH][eE][nN]\b'
+    r'then\b'
     return t
 
 def t_TYPE(t):
-    r'[tT][yY][pP][eE]\b'
+    r'type\b'
     return t
 
 def t_WITH(t):
-    r'[wW][iI][tT][hH]\b'
+    r'with\b'
     return t
 
 def t_AND(t):
-    r'[aA][nN][dD]\b'
+    r'and\b'
     return t
 
 def t_DIV(t):
-    r'[dD][iI][vV]\b'
+    r'div\b'
     return t
 
 def t_END(t):
-    r'[eE][nN][dD]\b'
+    r'end\b'
     return t
 
 def t_FOR(t):
-    r'[fF][oO][rR]\b'
+    r'for\b'
     return t
 
 def t_MOD(t):
-    r'[mM][oO][dD]\b'
+    r'mod\b'
     return t
 
 def t_NIL(t):
-    r'[nN][iI][lL]\b'
+    r'nil\b'
     return t
 
 def t_NOT(t):
-    r'[nN][oO][tT]\b'
+    r'not\b'
     return t
 
 def t_SET(t):
-    r'[sS][eE][tT]\b'
+    r'set\b'
     return t
 
 def t_VAR(t):
-    r'[vV][aA][rR]\b'
+    r'var\b'
     return t
 
 def t_DO(t):
-    r'[dD][oO]\b'
+    r'do\b'
     return t
 
 def t_IF(t):
-    r'[iI][fF]\b'
+    r'if\b'
     return t
 
 def t_IN(t):
-    r'[iI][nN]\b'
+    r'in\b'
     return t
 
 def t_OF(t):
-    r'[oO][fF]\b'
+    r'of\b'
     return t
 
 def t_OR(t):
-    r'[oO][rR]\b'
+    r'or\b'
     return t
 
 def t_TO(t):
-    r'[tT][oO]\b'
+    r'to\b'
     return t
 
 # Literales
@@ -302,7 +303,7 @@ def test(data, lexer):
 
 # Construye el lexer
 
-lexer = lex.lex()
+lexer = lex.lex(reflags=re.IGNORECASE)
 
 # main
 
@@ -313,6 +314,5 @@ if __name__ == '__main__':
         fin = 'input.pas'
     f = open(fin, 'r')
     data = f.read()
-    print(data)
     lexer.input(data)
     test(data, lexer)
