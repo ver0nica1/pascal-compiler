@@ -72,163 +72,163 @@ t_RBR       = r'\]'
 # Palabras reservadas
 
 def t_PROCEDURE(t):
-    r'procedure\b'
+    r'procedure'
     return t
 
 def t_FUNCTION(t):
-    r'function\b'
+    r'function'
     return t
 
 def t_BOOLEAN(t):
-    r'boolean\b'
+    r'boolean'
     return t
 
 def t_INTEGER(t):
-    r'integer\b'
+    r'integer'
     return t
 
 def t_PROGRAM(t):
-    r'program\b'
+    r'program'
     return t
 
 def t_DOWNTO(t):
-    r'downto\b'
+    r'downto'
     return t
 
 def t_PACKED(t):
-    r'packed\b'
+    r'packed'
     return t
 
 def t_RECORD(t):
-    r'record\b'
+    r'record'
     return t
 
 def t_REPEAT(t):
-    r'repeat\b'
+    r'repeat'
     return t
 
 def t_STRING(t):
-    r'string\b'
+    r'string'
     return t
 
 def t_ARRAY(t):
-    r'array\b'
+    r'array'
     return t
 
 def t_BEGIN(t):
-    r'begin\b'
+    r'begin'
     return t
 
 def t_CONST(t):
-    r'const\b'
+    r'const'
     return t
 
 def t_LABEL(t):
-    r'label\b'
+    r'label'
     return t
 
 def t_UNTIL(t):
-    r'until\b'
+    r'until'
     return t
 
 def t_WHILE(t):
-    r'while\b'
+    r'while'
     return t
 
 def t_CASE(t):
-    r'case\b'
+    r'case'
     return t
 
 def t_CHAR(t):
-    r'char\b'
+    r'char'
     return t
 
 def t_ELSE(t):
-    r'else\b'
+    r'else'
     return t
 
 def t_FILE(t):
-    r'file\b'
+    r'file'
     return t
 
 def t_GOTO(t):
-    r'goto\b'
+    r'goto'
     return t
 
 def t_REAL(t):
-    r'real\b'
+    r'real'
     return t
 
 def t_THEN(t):
-    r'then\b'
+    r'then'
     return t
 
 def t_TYPE(t):
-    r'type\b'
+    r'type'
     return t
 
 def t_WITH(t):
-    r'with\b'
+    r'with'
     return t
 
 def t_AND(t):
-    r'and\b'
+    r'and'
     return t
 
 def t_DIV(t):
-    r'div\b'
+    r'div'
     return t
 
 def t_END(t):
-    r'end\b'
+    r'end'
     return t
 
 def t_FOR(t):
-    r'for\b'
+    r'for'
     return t
 
 def t_MOD(t):
-    r'mod\b'
+    r'mod'
     return t
 
 def t_NIL(t):
-    r'nil\b'
+    r'nil'
     return t
 
 def t_NOT(t):
-    r'not\b'
+    r'not'
     return t
 
 def t_SET(t):
-    r'set\b'
+    r'set'
     return t
 
 def t_VAR(t):
-    r'var\b'
+    r'var'
     return t
 
 def t_DO(t):
-    r'do\b'
+    r'do'
     return t
 
 def t_IF(t):
-    r'if\b'
+    r'if'
     return t
 
 def t_IN(t):
-    r'in\b'
+    r'in'
     return t
 
 def t_OF(t):
-    r'of\b'
+    r'of'
     return t
 
 def t_OR(t):
-    r'or\b'
+    r'or'
     return t
 
 def t_TO(t):
-    r'to\b'
+    r'to'
     return t
 
 # Literales
