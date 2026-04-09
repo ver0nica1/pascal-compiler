@@ -1,46 +1,45 @@
-PROGRAM Factorial;                    { MAYUSCULAS }
+PROGRAM Factorial;
 
-Var                                   { Mixta }
-  n        : INTEGER;                 { MAYUSCULAS }
-  resultado: integer;                 { minusculas }
-  i        : Integer;                 { Mixta }
-  mensaje  : STRING;                  { MAYUSCULAS }
+Var
+  n        : INTEGER;
+  resultado: integer;
+  mensaje  : STRING;
 
 (* Funcion que calcula el factorial de un numero *)
-
 FUNCTION calcFactorial(num: integer): INTEGER;   
 Var
   acum: integer;
   j   : integer;
-Begin                                 { Mixta }
+Begin
   acum := 1;
   j    := 1;
-  WHILE j <= num DO                   { MAYUSCULAS }
-  begin                               { minusculas }
+  WHILE j <= num DO
+  begin
     acum := acum * j;
     j    := j + 1;
   end;
   calcFactorial := acum; 
-EnD;                                  { Mixta }
+EnD;
 
-BEGIN                                 { MAYUSCULAS }
+BEGIN
   n := 5;
+  resultado := 1;
 
-  IF n < 0 then                       { Mixta: IF MAYUSCULAS, then minusculas }
+  IF n < 0 then
   begin
-    mensaje := 'Numero negativo';     { comillas simples }
+    mensaje := 'Numero negativo';
   end
   ELSE IF n = 0 then
-  Begin                               { Mixta }
-    mensaje := "Factorial es 1";      { comillas dobles }
+  Begin
+    mensaje := 'Factorial es 1';
   End
-  else                                { minusculas }
+  else
   begin
     resultado := calcFactorial(n);
-    IF resultado > 100 then
-      mensaje := 'Numero grande'
-    else
-      mensaje := 'Numero chico';
   end;
+  
+  WriteLn(mensaje);
+  IF n >= 0 THEN
+    WriteLn('El factorial de ', n, ' es: ', resultado);
 
-eNd.                                  { Mixta con punto final }
+eNd.
