@@ -285,10 +285,13 @@ def t_COMMENT(t):
     r'\(\*(.|\n)*?\*\)|{[^}]*}'
     t.lexer.lineno += t.value.count('\n')
 
-# Error léxico
+# Manejo de errores léxicos
+lexer_errors = []
 
 def t_error(t):
-    print(f"[ERROR LÉXICO] Línea {t.lexer.lineno}: carácter ilegal '{t.value[0]}'")
+    msg = f"ERROR LÉXICO en línea {t.lexer.lineno}: carácter ilegal '{t.value[0]}'"
+    if msg not in lexer_errors:
+        lexer_errors.append(msg)
     t.lexer.skip(1)
 
 # Función de prueba

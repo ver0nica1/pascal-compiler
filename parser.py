@@ -624,14 +624,27 @@ def p_empty(p):
 #   MANEJO DE ERRORES
 # ==============================================================
 
+errors_list = []
+
 def p_error(p):
-    if VERBOSE:
-        if p is not None:
-            print(f"ERROR SINTÁCTICO en línea {p.lexer.lineno}: no se esperaba el token '{p.value}'")
-        else:
-            print("ERROR SINTÁCTICO: fin de archivo inesperado")
+    global errors_list
+    if p is not None:
+        # Mostramos exactamente cuál fue el token que causó el problema
+        msg = f"ERROR SINTÁCTICO en la línea {p.lineno}: no se esperaba el token '{p.value}'"
+        
+        # Evitar inundar la pantalla con muchos errores en la misma línea
+        if not any(f"línea {p.lineno}:" in e for e in errors_list):
+            errors_list.append(msg)
+            
+        # Recuperación modo pánico: buscamos el siguiente ';' o palabra clave importante
+        while True:
+            tok = parser.token()
+            if not tok or tok.type in ['SEMICOLON', 'BEGIN', 'END']:
+                break
+        parser.errok()
     else:
-        raise Exception('syntax', 'error')
+        # El usuario solicitó omitir el error de fin de archivo inesperado
+        pass
 
 # ==============================================================
 #   CONSTRUCCIÓN DEL PARSER
@@ -640,12 +653,27 @@ def p_error(p):
 parser = yacc.yacc()
 
 if __name__ == '__main__':
+    import sys
     if len(sys.argv) > 1:
         fin = sys.argv[1]
     else:
         fin = 'input.pas'
 
-    f = open(fin, 'r')
+    f = open(fin, 'r', encoding='utf-8', errors='ignore')
     data = f.read()
+    total_lines = len(data.splitlines())
+    
+    pascal_lexer.lexer_errors = []
+    
     parser.parse(data, lexer=pascal_lexer.lexer, tracking=True)
-    print("\n✓ El parser reconoció correctamente el programa Pascal")
+    
+    all_errors = pascal_lexer.lexer_errors + errors_list
+    
+    if len(all_errors) == 0:
+        print(f"\nSe analizaron {total_lines} líneas correctamente.")
+        print("[OK] El parser reconoció correctamente el programa Pascal")
+    else:
+        print(f"\nSe analizaron {total_lines} líneas.")
+        print(f"Se encontraron {len(all_errors)} error(es):")
+        for err in all_errors:
+            print(f" - {err}")
