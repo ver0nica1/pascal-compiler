@@ -298,6 +298,7 @@ class AnalizadorSemantico:
     def __init__(self):
         self.tabla   = TablaSimbolos()
         self.errores = []
+        self.for_vars = []
 
     def _error(self, mensaje, linea=None):
         prefijo = "ERROR SEMÁNTICO"
@@ -479,10 +480,18 @@ class AnalizadorSemantico:
         self._visitar_lista(n.subprogramas)
 
     def _v_NodoAsignacion(self, n):
+        nombre = getattr(n.variable, 'nombre', None)
+        if nombre:
+            sim = self.tabla.buscar(nombre)
+            if sim:
+                if sim.categoria == 'const':
+                    self._error(f"No se puede asignar un valor a la constante '{nombre}'", n.linea)
+                elif nombre.lower() in self.for_vars:
+                    self._error(f"No se puede modificar '{nombre}' dentro del cuerpo del FOR porque es la variable de control", n.linea)
+
         tipo_var  = self._visitar(n.variable)
         tipo_expr = self._visitar(n.expresion)
         if not self._compatible(tipo_var, tipo_expr):
-            nombre = getattr(n.variable, 'nombre', None)
             if nombre:
                 self._error(
                     f"Incompatibilidad de tipos en asignación: "
@@ -526,7 +535,14 @@ class AnalizadorSemantico:
             t = self._visitar(expr)
             if t not in (T_INTEGER, T_CHAR, T_UNKNOWN):
                 self._error(f"Los límites del FOR deben ser integer o char, se encontró '{t}'", n.linea)
+                
+        if n.var_control:
+            self.for_vars.append(n.var_control.lower())
+            
         self._visitar(n.cuerpo)
+        
+        if n.var_control:
+            self.for_vars.pop()
 
     def _v_NodoCase(self, n):
         self._visitar(n.expresion)
